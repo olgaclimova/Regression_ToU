@@ -24,7 +24,7 @@ notebooks/ → main jupyter notebook with results, plots, and explanations
 
 utilities/ → helper scripts (to be run inside the notebook)
 
-results/ → tuned hyperparameters and output from model training
+results/ → json with tuned hyperparameters
 
 ## Workflow:
 
