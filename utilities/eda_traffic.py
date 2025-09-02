@@ -1,4 +1,4 @@
-# EDA for TRANSITS: summary stats, correlation with NO2, seaborn plots (hist + boxplot).
+# EDA for TRANSITS: summary stats, correlation with NO2, seaborn plots (hist + scatterplot).
 
 import os
 import pandas as pd
@@ -39,7 +39,7 @@ print("\nCorrelation with NO₂:")
 print(f"  Pearson:  {pearson:.3f}")
 print(f"  Spearman: {spearman:.3f}")
 
-# Plots: histogram + boxplot (side by side)
+# Plots: histogram + scatterplot (side by side)
 fig, ax = plt.subplots(1, 2, figsize=(12, 4), constrained_layout=True)
 
 # Left: histogram + KDE + mean/median
@@ -50,10 +50,11 @@ ax[0].set_title("Transits — histogram")
 ax[0].set_xlabel("Transits"); ax[0].set_ylabel("Count")
 ax[0].legend()
 
-# Right: boxplot (sostituisce il barplot dei quantili)
-sns.boxplot(x=s.dropna(), ax=ax[1], orient="h")
-ax[1].set_title("Transits — boxplot")
+# Right: scatterplot Transits vs NO2
+sns.scatterplot(x=s, y=no2, ax=ax[1], alpha=0.6)
+ax[1].set_title("NO2 vs Transits")
 ax[1].set_xlabel("Transits")
-ax[1].set_ylabel("")
+ax[1].set_ylabel("NO2 (µg/m³)")
 
 plt.show()
+

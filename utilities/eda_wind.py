@@ -1,4 +1,4 @@
-# EDA for WIND km/h: summary stats, correlation with NO2, seaborn plots (hist + boxplot).
+# EDA for WIND km/h: summary stats, correlation with NO2, seaborn plots (hist + scatterplot).
 
 import os
 import pandas as pd
@@ -24,7 +24,7 @@ minv   = wind.min();    maxv   = wind.max()
 min_day = df.loc[wind.idxmin(), "DATE"].date() if wind.notna().any() else "n/a"
 max_day = df.loc[wind.idxmax(), "DATE"].date() if wind.notna().any() else "n/a"
 
-print(" EDA WIND: ")
+print("EDA WIND (km/h): ")
 print(f"mean:   {mean:.2f} km/h")
 print(f"median: {median:.2f} km/h")
 print(f"std:    {std:.2f} km/h")
@@ -39,10 +39,10 @@ print("\nCorrelation NO₂ ~ Wind:")
 print(f"  Pearson:  {pearson:.3f}")
 print(f"  Spearman: {spearman:.3f}")
 
-# Plots: histogram + boxplot (side by side)
+# Plots: histogram + scatterplot (side by side)
 fig, ax = plt.subplots(1, 2, figsize=(12, 4), constrained_layout=True)
 
-# Left: histogram + KDE + mean/median (25 bins)
+# Left: histogram + KDE + mean/median
 sns.histplot(wind.dropna(), bins=25, kde=True, ax=ax[0])
 ax[0].axvline(mean,   ls="--", lw=2, color="tab:orange", label="mean")
 ax[0].axvline(median, ls="-.", lw=2, color="tab:green",  label="median")
@@ -50,10 +50,11 @@ ax[0].set_title("Wind (km/h) — histogram")
 ax[0].set_xlabel("Wind (km/h)"); ax[0].set_ylabel("Count")
 ax[0].legend()
 
-# Right: boxplot
-sns.boxplot(x=wind.dropna(), ax=ax[1], orient="h")
-ax[1].set_title("Wind (km/h) — boxplot")
+# Right: scatterplot Wind vs NO2
+sns.scatterplot(x=wind, y=no2, ax=ax[1], alpha=0.6)
+ax[1].set_title("NO2 vs Wind")
 ax[1].set_xlabel("Wind (km/h)")
-ax[1].set_ylabel("")
+ax[1].set_ylabel("NO2 (µg/m³)")
 
 plt.show()
+
